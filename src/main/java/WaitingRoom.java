@@ -46,10 +46,25 @@ public class WaitingRoom {
         }
     }
 
-    public void exitRoom() throws Exception{
+    public synchronized void exitRoom(String animal) throws Exception {
+        switch (animal) {
+            case "dog":
+                if(dogsNumber > 0) {
+                    dogsNumber--;
+                }
 
+                if (dogsNumber == 0) dogPresent = false;
+                notify();
 
+                break;
 
+            case "cat":
+                catPresent = false;
+                notify();
+
+            default:
+                System.out.println("Non dovrei essere qui...\n");
+        }
     }
 
 }
