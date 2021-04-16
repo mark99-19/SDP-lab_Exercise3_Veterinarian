@@ -24,8 +24,8 @@ public class WaitingRoom {
                     wait();
                 } else {
                     System.out.println("Cane     entra.");
-                    dogPresent = true;
                     dogsNumber++;
+                    dogPresent = true;
                 }
                 break;
 
