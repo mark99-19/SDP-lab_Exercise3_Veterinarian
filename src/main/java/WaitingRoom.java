@@ -69,6 +69,7 @@ public class WaitingRoom {
     }
 
     public String getStatus(){
+
         return String.format(
                     """
                     
