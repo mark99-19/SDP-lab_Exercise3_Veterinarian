@@ -30,7 +30,7 @@ public class WaitingRoom {
             case "CAT" -> {
 
                 while(catPresent || dogPresent)     //un while do è sacrosanto perchè il controllo è da fare runtime sempre. Abbiamo visto che il problema si pone quando può entrare un gatto e cane
-                    //caso gatto non può entrare
+                // caso gatto non può entrare
                 {
                     System.out.printf("%s    %d  non può entrare.\n",
                             animal.getSpecies(), animal.getId());
