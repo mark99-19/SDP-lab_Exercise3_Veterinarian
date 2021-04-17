@@ -1,10 +1,12 @@
 public class WaitingRoom {
-    private boolean catPresent = false;
-    private boolean dogPresent = false;
+    private boolean catPresent;
+    private boolean dogPresent;
     private Integer dogsNumber;
 
     public WaitingRoom() {
-        dogsNumber = 0;
+        this.dogsNumber = 0;
+        this.catPresent = false;
+        this.dogPresent = false;
     }
 
     // come cazzo si mette qui il @not null
@@ -12,16 +14,10 @@ public class WaitingRoom {
 
         switch (animal.getSpecies()) {
             case "DOG" -> {
-                if (catPresent)
+                while (catPresent || dogsNumber == 4)
                 //cane non può entrare
                 {
-                    System.out.printf("%s    %d  non può entrare, gatto presente.%n",
-                            animal.getSpecies(), animal.getId());
-                    wait();
-                } else if (dogsNumber == 4)
-                //max numero di cani raggiunto
-                {
-                    System.out.printf("%s    %d  non può entrare, troppi cani presente.%n",
+                    System.out.printf("%s    %d  non può entrare.\n",
                             animal.getSpecies(), animal.getId());
                     wait();
                 }
@@ -32,14 +28,15 @@ public class WaitingRoom {
                 System.out.println(this.getStatus());
             }
             case "CAT" -> {
-                if (catPresent || dogPresent)
-                //caso gatto non può entrare
+
+                while(catPresent || dogPresent)     //un while do è sacrosanto perchè il controllo è da fare runtime sempre. Abbiamo visto che il problema si pone quando può entrare un gatto e cane
+                    //caso gatto non può entrare
                 {
                     System.out.printf("%s    %d  non può entrare.\n",
                             animal.getSpecies(), animal.getId());
                     wait();
                 }
-                System.out.printf("%s    %d   entra.\n",
+                System.out.printf("%s    %d  entra.\n",
                         animal.getSpecies(), animal.getId());
                 catPresent = true;
                 System.out.println(this.getStatus());
@@ -55,14 +52,14 @@ public class WaitingRoom {
                     dogsNumber--;
                 }
                 if (dogsNumber == 0) dogPresent = false;
-                System.out.printf("%s    %d  esce.%n",
+                System.out.printf("%s    %d  esce.\n",
                         animal.getSpecies(), animal.getId());
                 notify();
                 System.out.println(this.getStatus());
             }
             case "CAT" -> {
                 catPresent = false;
-                System.out.printf("%s    %d  esce.%n",
+                System.out.printf("%s    %d  esce.\n",
                         animal.getSpecies(), animal.getId());
                 notify();
                 System.out.println(this.getStatus());
@@ -73,13 +70,12 @@ public class WaitingRoom {
 
     public String getStatus(){
         return String.format(
-                """
-
-                        ###\tDog present: %s
-                        ###\tCat present: %s
-                        ###\tNumber of dogs: %d
-
-                        """,
+                    """
+                    
+                    ###\tDog present: %s
+                    ###\tCat present: %s
+                    ###\tNumber of dogs: %d
+                    """,
                 dogPresent, catPresent, dogsNumber);
     }
 
